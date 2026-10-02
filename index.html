@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#FAF9F6" />
+    <meta name="description" content="Central pessoal de planejamento da viagem ao Japão." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23BC002D'/%3E%3C/svg%3E" />
+    <title>Japan Trip Planner</title>
+    <script>
+      // Aplica o tema antes do primeiro paint (evita "flash" branco no modo escuro)
+      try {
+        var raw = localStorage.getItem('jtp:data:v1');
+        var t = raw ? (JSON.parse(raw).settings || {}).theme : 'system';
+        var dark = t === 'dark' || ((!t || t === 'system') && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Se este arquivo-fonte for aberto direto do disco, explica o que fazer em vez de mostrar tela branca
+      if (location.protocol === 'file:') {
+        setTimeout(function () {
+          var root = document.getElementById('root');
+          if (root && !root.children.length)
+            root.innerHTML = '<div style="font:16px/1.6 system-ui,sans-serif;max-width:520px;margin:15vh auto;padding:24px">' +
+              '<h1 style="font-size:22px">Este é o arquivo-fonte do projeto</h1>' +
+              '<p>Ele precisa do Vite para funcionar. No terminal do VS Code, rode:</p>' +
+              '<pre style="background:#f4f2ee;padding:12px 16px;border-radius:12px">npm install\nnpm run dev</pre>' +
+              '<p>e abra o endereço que aparecer (http://localhost:5173).</p></div>';
+        }, 1500);
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

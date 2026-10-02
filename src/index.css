@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens de cor — trocados em bloco no modo escuro */
+:root {
+  --bg: #faf9f6;
+  --surface: #ffffff;
+  --surface-2: #f4f2ee;
+  --ink: #141416;
+  --muted: #6d6c72;
+  --faint: #a3a2a8;
+  --line: #ebe8e3;
+  --accent: #bc002d;
+  --accent-ink: #ffffff;
+  --sakura: #f6e3e7;
+  --sakura-ink: #a8566c;
+  --success: #2f7d5b;
+  --warning: #a86a12;
+  --info: #3b5b8c;
+  --shadow: 0 1px 2px rgb(20 20 22 / 0.04), 0 4px 16px rgb(20 20 22 / 0.04);
+  --shadow-lg: 0 8px 40px rgb(20 20 22 / 0.12);
+  color-scheme: light;
+}
+.dark {
+  --bg: #0e0e10;
+  --surface: #17171a;
+  --surface-2: #1f1f23;
+  --ink: #f2f1ee;
+  --muted: #9d9ca3;
+  --faint: #6b6a71;
+  --line: #2a2a2f;
+  --accent: #e5344f;
+  --accent-ink: #ffffff;
+  --sakura: #2e2226;
+  --sakura-ink: #e9a9b9;
+  --success: #52b68b;
+  --warning: #e0a43a;
+  --info: #86a6db;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 8px 40px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-sakura: var(--sakura);
+  --color-sakura-ink: var(--sakura-ink);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --shadow-soft: var(--shadow);
+  --shadow-float: var(--shadow-lg);
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  --font-display: ui-serif, 'Iowan Old Style', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+  --animate-fade-up: fade-up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fade-in: fade-in 0.2s ease-out both;
+  --animate-sheet-up: sheet-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-pop: pop 0.25s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sheet-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pop {
+  0% { transform: scale(0.6); }
+  100% { transform: scale(1); }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    overscroll-behavior-y: none;
+  }
+  input, select, textarea, button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+  ::selection { background: var(--sakura); color: var(--ink); }
+  /* Evita o zoom automático do iOS em campos de formulário */
+  input, select, textarea { font-size: 16px; }
+  input[type='date'], input[type='time'] { min-height: 44px; }
+}
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+  .stagger > * { animation: var(--animate-fade-up); }
+  .stagger > *:nth-child(2) { animation-delay: 40ms; }
+  .stagger > *:nth-child(3) { animation-delay: 80ms; }
+  .stagger > *:nth-child(4) { animation-delay: 120ms; }
+  .stagger > *:nth-child(5) { animation-delay: 160ms; }
+  .stagger > *:nth-child(n + 6) { animation-delay: 200ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Recharts: foco sem contorno preto */
+.recharts-wrapper *:focus { outline: none; }
